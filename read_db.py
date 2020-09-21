@@ -81,7 +81,7 @@ def main():
     #create engine_string
     engine = create_db_engine()
     #Write the df into 'Earthquake' table name
-    write_to_db(engine,'Earthquake','index',df,if_table_exist='append')
+    write_to_db(engine,'Earthquake','earthquake_id',df,if_table_exist='append')
 
     #Read data from postgres db, read only 'cause column' into dataframe:
     df2 = read_from_db(engine,"select cause from \"earthquake\"")
