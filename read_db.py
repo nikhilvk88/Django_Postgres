@@ -34,8 +34,8 @@ engine = create_engine(engine_string)
   return engine
 
 def read_from_db(engine,query):
-    
-    dbConnection    = db_engine.connect()
+
+    dbConnection    = engine.connect()
 #    query_1 = "select cause from "+"\""+query+"\""
 #    query = "select cause from \"earthquake\""
 #    query2 = "select * from \"earthquake\""
@@ -48,6 +48,8 @@ def read_from_db(engine,query):
     return df2
 
 def write_to_db(engine,table_name,table_PK,df_data,if_table_exist='append'):
+
+    dbConnection    = engine.connect()
 
     df_data = df_data.set_index(table_PK)
 
@@ -67,6 +69,7 @@ def write_to_db(engine,table_name,table_PK,df_data,if_table_exist='append'):
     if(if_table_exist='false'):
         frame = df_data.to_sql(table_name, engine)
 
+    dbConnection.close()
 
 
     return
