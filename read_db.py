@@ -34,8 +34,7 @@ engine = create_engine(engine_string)
   return engine
 
 def read_from_db(engine,query):
-
-    db_engine = create_db_engine()
+    
     dbConnection    = db_engine.connect()
 #    query_1 = "select cause from "+"\""+query+"\""
 #    query = "select cause from \"earthquake\""
@@ -44,7 +43,8 @@ def read_from_db(engine,query):
     # To read full table
     df = pd.read_sql_table('tablename',engine)
     # To query
-    df3 = pd.read_sql(query,engine)
+    df2 = pd.read_sql(query,engine)
+    dbConnection.close()
     return df2
 
 def write_to_db(engine,table_name,table_PK,df_data,if_table_exist='append'):
@@ -76,7 +76,7 @@ def main():
     # Read from a csv
     df = pd.read_csv('earthquake.csv')
 
-    #Wring the above read dataframe into postgres DATABASES
+    #Writng the above read dataframe into postgres DATABASES
 
     #create engine_string
     engine = create_db_engine()
