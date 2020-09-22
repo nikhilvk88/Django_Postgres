@@ -5,33 +5,33 @@ import sys
 
 def create_db_engine():
 # django database settings
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '****',
-        'USER': 'postgres',
-        'PASSWORD': '****',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    },
-}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': '****',
+            'USER': 'postgres',
+            'PASSWORD': '****',
+            'HOST': '127.0.0.1',
+            'PORT': '5432'
+        },
+    }
 
-# choose the database
-db = DATABASES['default']
+    # choose the database
+    db = DATABASES['default']
 
-# create engine connection string
-engine_string = "postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}".format(
-    user = db['USER'],
-    password = db['PASSWORD'],
-    host = db['HOST'],
-    port = db['PORT'],
-    database = db['NAME'],
-)
+    # create engine connection string
+    engine_string = "postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}".format(
+        user = db['USER'],
+        password = db['PASSWORD'],
+        host = db['HOST'],
+        port = db['PORT'],
+        database = db['NAME'],
+    )
 
-# create sqlalchemy engine
-engine = create_engine(engine_string)
+    # create sqlalchemy engine
+    engine = create_engine(engine_string)
 
-  return engine
+    return engine
 
 def read_from_db(engine,query):
 
@@ -54,19 +54,19 @@ def write_to_db(engine,table_name,table_PK,df_data,if_table_exist='append'):
     df_data = df_data.set_index(table_PK)
 
     #Append to existing data
-    if(if_table_exist='append'):
+    if(if_table_exist=='append'):
         frame = df_data.to_sql(table_name, engine, if_exists='append')
 
     #Replace existing data
-    if(if_table_exist='replace'):
+    if(if_table_exist=='replace'):
         frame = df_data.to_sql(table_name, engine, if_exists='replace')
 
     #Fail if table already exists
-    if(if_table_exist='fail'):
+    if(if_table_exist=='fail'):
         frame = df_data.to_sql(table_name, engine, if_exists='fail')
 
     # Create table
-    if(if_table_exist='false'):
+    if(if_table_exist=='false'):
         frame = df_data.to_sql(table_name, engine)
 
     dbConnection.close()
